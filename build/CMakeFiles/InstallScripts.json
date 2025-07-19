@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/PathTracing/firstpathtracer/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
