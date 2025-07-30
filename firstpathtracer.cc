@@ -3,6 +3,7 @@
 #include "firstpathtracer.h"
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 //adding color and vector utility functions
 #include "color.h"
@@ -12,7 +13,7 @@
 
 using namespace std;
 
-std::ofstream image("imagetest6.ppm");
+std::ofstream image("..\\imagetest6.ppm");
 
 color ray_color(const ray& r) {
     vec3 unit_direction = unit_vector(r.direction());
@@ -24,7 +25,9 @@ int main() {
 
     if (!image.is_open()) {
         std::cout << "Error: Image file not created" << std::endl;
+        
     }
+    std::cout << "Working directory: " << std::filesystem::current_path() << std::endl;
 
   //SetConsoleOutputCP(CP_UTF8);
 
