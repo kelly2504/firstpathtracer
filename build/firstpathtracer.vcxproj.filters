@@ -9,6 +9,15 @@
     <ClInclude Include="D:\PathTracing\firstpathtracer\firstpathtracer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D:\PathTracing\firstpathtracer\vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\PathTracing\firstpathtracer\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\PathTracing\firstpathtracer\ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="D:\PathTracing\firstpathtracer\CMakeLists.txt" />

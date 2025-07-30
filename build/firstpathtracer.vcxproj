@@ -354,6 +354,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="D:\PathTracing\firstpathtracer\firstpathtracer.cc" />
     <ClInclude Include="D:\PathTracing\firstpathtracer\firstpathtracer.h" />
+    <ClInclude Include="D:\PathTracing\firstpathtracer\vec3.h" />
+    <ClInclude Include="D:\PathTracing\firstpathtracer\color.h" />
+    <ClInclude Include="D:\PathTracing\firstpathtracer\ray.h" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
