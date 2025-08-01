@@ -13,35 +13,36 @@
 
 using namespace std;
 
-std::ofstream image("..\\imagetest7.ppm");
+std::ofstream image("..\\imagetest01.ppm");
+
 //function to add a sphere to the scene if the ray hits within the sphere radius
 bool hit_sphere(const point3& center, double radius, const ray& r) {
-    vec3 oc = r.origin() - center; //vector from ray origin to sphere center
+    vec3 oc = center - r.origin(); //vector from ray origin to sphere center
     auto a = dot(r.direction(), r.direction());
-    auto b = dot(oc, r.direction());
-    auto c = dot(oc, oc) - radius * radius;
-    auto discriminant = b * b - a * c; //discriminant of the quadratic equation
-    return (discriminant > 0); //if discriminant is positive, the ray hits the sphere
+    auto b = -2.0 * dot(r.direction(), oc);
+    auto c = dot(oc, oc) - (radius * radius);
+    auto discriminant = (b * b) - (4 * a * c); //discriminant of the quadratic equation
+    return (discriminant >= 0); //if discriminant is positive, the ray hits the sphere
 
 }
 
 color ray_color(const ray& r) {
     //if the ray hits the sphere, return a color based on the hit
-    if (hit_sphere(point3(0, 0, -1), 0.5, r)) {
-        return color(0, 0, 1); //return a sphere of blue color 
-    }
+    // if (hit_sphere(point3(0, 0, -1), 0.6, r)) {
+    //     return color(1, 0, 0); //return a sphere of red color 
+    // }
 
     vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5 * (unit_direction.y() + 1.0);
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(1.0, 0.0, 1.0);
+    return (1.0 - a) * color(1.0, 0.8, 0.9) + a * color(0.8, 0.7, 1.0);
 }
 
 int main() {
 
-    if (!image.is_open()) {
-        std::cout << "Error: Image file not created" << std::endl;
+    // if (!image.is_open()) {
+    //     std::cout << "Error: Image file not created" << std::endl;
         
-    }
+    // }
     std::cout << "Working directory: " << std::filesystem::current_path() << std::endl;
 
   //SetConsoleOutputCP(CP_UTF8);
