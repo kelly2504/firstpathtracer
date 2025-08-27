@@ -16,20 +16,35 @@ using namespace std;
 std::ofstream image("..\\imagetest01.ppm");
 
 //function to add a sphere to the scene if the ray hits within the sphere radius
-bool hit_sphere(const point3& center, double radius, const ray& r) {
-    vec3 oc = r.origin() - center; //vector from ray origin to sphere center
-    auto a = dot(r.direction(), r.direction());
-    auto b = -2.0 * dot(r.direction(), oc);
-    auto c = dot(oc, oc) - (radius * radius);
-    auto discriminant = (b * b) - (4* a * c); //discriminant of the quadratic equation
-    return (discriminant > 0); //if discriminant is positive, the ray hits the sphere
-
+double hit_sphere(const point3& center, double radius, const ray& r) {
+    vec3 oc = center - r.origin(); //vector from ray origin to sphere center
+    auto a = r.direction().length_squared(); //length squared of the ray direction vector
+    auto b = dot(r.direction(), oc);
+    auto c = oc.length_squared() - (radius * radius);
+    auto discriminant = (b * b) - ( a * c); //discriminant of the quadratic equation
+    //std::cout << "Discriminant: " << discriminant << std::endl;
+    //return (discriminant > 0); //if discriminant is positive, the ray hits the sphere
+    
+    if (discriminant < 0) {
+        return -1.0; //no hit
+    } else {
+        return (b - std::sqrt(discriminant)) / (a); //return the distance to the hit point
+    }
 }
 
 color ray_color(const ray& r) {
     //if the ray hits the sphere, return a color based on the hit
-    if (hit_sphere(point3(0, -1, -1), 0.5 , r)) {
-        return color(1, 0, 0); //return a sphere of red color 
+    // if (hit_sphere(point3(0, -1, -1), 0.2 , r)) {
+    //     return color(1, 0, 0); //return a sphere of red color 
+    // }
+    auto t = hit_sphere(point3(0, -1, -1), 0.5, r);
+    if (t > 0.0) {
+        //calculate the normal at the hit point
+        //vec3 normal = unit_vector(r.at(t) - vec3(0, -1, -1));
+        //return a color based on the normal
+        //return 0.5 * color(1, 0, 0); //normal is in range [-1, 1], so we add 1 to shift it to [0, 2] and then scale by 0.5
+        vec3 N = unit_vector(r.at(t) - vec3(0,-1,-1));
+        return 0.5*color(N.x()+1, N.y()+1, N.z()+1);
     }
 
     vec3 unit_direction = unit_vector(r.direction());
@@ -62,7 +77,7 @@ int main() {
     //viewport widths less than 1 is ok since they are real valued
     auto viewport_height = 2.0;
     auto viewport_width = viewport_height * (aspect_ratio);
-    auto camera_center = point3(0, 1, 0); //initialising camera location
+    auto camera_center = point3(0, 0, 0); //initialising camera location
 
     //calculating the vectors across the horizontal and down the vertical viewport edges
     auto viewport_u = vec3(viewport_width, 0, 0);
